@@ -1,4 +1,12 @@
+import EmailBody from "./app/components/EmailBody";
+import Navbar from "./app/components/Navbar";
+
 const App = () => {
-  return <div>hello</div>;
+  return (
+    <>
+      <Navbar />
+      <EmailBody />
+    </>
+  );
 };
 export default App;

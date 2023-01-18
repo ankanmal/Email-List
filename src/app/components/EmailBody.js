@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
-import { fetchEmail, getAllEmail } from "./emailListSlice";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getAllEmail } from "./emailListSlice";
+
 import ShimmerUi from "./ShimmerUi";
 import "./emailBody.css";
 import {
@@ -16,19 +16,6 @@ const EmailBody = () => {
   const readEmailstate = useSelector(readEmailStatus);
   const unreadEmailState = useSelector(unreadEmailStatus);
   const favoriteEmailState = useSelector(favoriteEmailStatus);
-  const dispatch = useDispatch();
-  const emailStatus = useSelector((state) => state.emailList.status);
-  console.log(readEmailstate);
-  console.log(unreadEmailState);
-
-  console.log("first render");
-
-  useState(() => {
-    if (emailStatus === "idle") {
-      dispatch(fetchEmail());
-    }
-  }, []);
-  //console.log(email);
 
   const display =
     email?.length === 0 ? (
@@ -56,7 +43,7 @@ const EmailBody = () => {
         return <EmailMaster e={e} />;
       })
     );
-  console.log(display);
+
   return (
     <>
       {display}

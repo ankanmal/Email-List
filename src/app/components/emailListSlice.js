@@ -1,26 +1,30 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const EMAIL_URL = "https://flipkart-email-mock.vercel.app/";
+const EMAIL_URL = "https://flipkart-email-mock.vercel.app/?page=";
 const EMAIL_BODY = "https://flipkart-email-mock.vercel.app/?id=";
 
 const initialState = {
   emailList: [],
   emailBody: null,
+  page: 1,
   status: "idle",
   bodystatus: "idle",
   bodyId: null,
   error: null,
 };
 
-export const fetchEmail = createAsyncThunk("emailList/fetchEmail", async () => {
-  try {
-    const data = await fetch(EMAIL_URL);
-    const json = await data.json();
-    return json;
-  } catch (err) {
-    console.log("Failed to get Data " + err);
+export const fetchEmail = createAsyncThunk(
+  "emailList/fetchEmail",
+  async (page) => {
+    try {
+      const data = await fetch(EMAIL_URL + page);
+      const json = await data.json();
+      return json;
+    } catch (err) {
+      console.log("Failed to get Data " + err);
+    }
   }
-});
+);
 export const fetchBody = createAsyncThunk("emailBody/fetchBody", async (id) => {
   const data = await fetch(EMAIL_BODY + id);
   const jsonBody = await data.json();
@@ -49,6 +53,9 @@ export const emailListSlice = createSlice({
         existingEmail.favorite = true;
       }
     },
+    changePage(state, action) {
+      state.page = action.payload;
+    },
   },
 
   extraReducers(builder) {
@@ -58,14 +65,13 @@ export const emailListSlice = createSlice({
       })
       .addCase(fetchEmail.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload.list);
-
+        state.emailList = [];
         const feat = action.payload.list.map((email) => {
           email.read = false;
           email.favorite = false;
           return email;
         });
-        console.log(feat);
+
         state.emailList = state.emailList.concat(feat);
       })
       .addCase(fetchEmail.rejected, (state, action) => {
@@ -85,7 +91,7 @@ export const emailListSlice = createSlice({
 });
 
 export default emailListSlice.reducer;
-export const { readEmail, favoriteEmail } = emailListSlice.actions;
+export const { readEmail, favoriteEmail, changePage } = emailListSlice.actions;
 
 export const getAllEmail = (state) => state.emailList.emailList;
 export const getAllBody = (state) => state.emailList.emailBody;

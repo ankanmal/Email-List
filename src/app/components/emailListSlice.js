@@ -21,7 +21,16 @@ export const fetchEmail = createAsyncThunk("emailList/fetchEmail", async () => {
 export const emailListSlice = createSlice({
   name: "emailList",
   initialState,
-  reducers: {},
+  reducers: {
+    readEmail(state, action) {
+      const existingEmail = state.emailList.find(
+        (email) => email.id === action.payload
+      );
+      if (existingEmail) {
+        existingEmail.read = true;
+      }
+    },
+  },
 
   extraReducers(builder) {
     builder
@@ -30,7 +39,15 @@ export const emailListSlice = createSlice({
       })
       .addCase(fetchEmail.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.emailList = state.emailList.concat(action.payload);
+        console.log(action.payload.list);
+
+        const feat = action.payload.list.map((email) => {
+          email.read = false;
+          email.favorite = false;
+          return email;
+        });
+        console.log(feat);
+        state.emailList = state.emailList.concat(feat);
       })
       .addCase(fetchEmail.rejected, (state, action) => {
         state.status = "failed";
@@ -39,5 +56,6 @@ export const emailListSlice = createSlice({
 });
 
 export default emailListSlice.reducer;
+export const { readEmail } = emailListSlice.actions;
 
 export const getAllEmail = (state) => state.emailList.emailList;

@@ -5,9 +5,10 @@ const EMAIL_BODY = "https://flipkart-email-mock.vercel.app/?id=";
 
 const initialState = {
   emailList: [],
-  emailBody: [],
+  emailBody: null,
   status: "idle",
   bodystatus: "idle",
+  bodyId: null,
   error: null,
 };
 
@@ -20,8 +21,8 @@ export const fetchEmail = createAsyncThunk("emailList/fetchEmail", async () => {
     console.log("Failed to get Data " + err);
   }
 });
-export const fetchBody = createAsyncThunk("emailBody/fetchBody", async () => {
-  const data = await fetch(EMAIL_BODY + 3);
+export const fetchBody = createAsyncThunk("emailBody/fetchBody", async (id) => {
+  const data = await fetch(EMAIL_BODY + id);
   const jsonBody = await data.json();
   return jsonBody;
 });
@@ -36,6 +37,16 @@ export const emailListSlice = createSlice({
       );
       if (existingEmail) {
         existingEmail.read = true;
+        state.bodyId = action.payload;
+      }
+    },
+
+    favoriteEmail(state, action) {
+      const existingEmail = state.emailList.find(
+        (email) => email.id === action.payload
+      );
+      if (existingEmail) {
+        existingEmail.favorite = true;
       }
     },
   },
@@ -65,7 +76,7 @@ export const emailListSlice = createSlice({
       })
       .addCase(fetchBody.fulfilled, (state, action) => {
         state.bodystatus = "succeeded";
-        state.emailBody = state.emailBody.concat(action.payload);
+        state.emailBody = action.payload;
       })
       .addCase(fetchBody.rejected, (state, action) => {
         state.bodystatus = "failed";
@@ -74,7 +85,8 @@ export const emailListSlice = createSlice({
 });
 
 export default emailListSlice.reducer;
-export const { readEmail } = emailListSlice.actions;
+export const { readEmail, favoriteEmail } = emailListSlice.actions;
 
 export const getAllEmail = (state) => state.emailList.emailList;
 export const getAllBody = (state) => state.emailList.emailBody;
+export const currentBodyId = (state) => state.emailList.bodyId;

@@ -1,14 +1,14 @@
 import "./navbar.css";
 import Read from "./features/Read";
 import Unread from "./features/Unread";
+import Favorite from "./features/Favorite";
 const Navbar = () => {
   return (
     <nav className="nav">
       <h4 className="options">Filters:</h4>
       <Unread />
       <Read />
-
-      <button className="options">Favorite</button>
+      <Favorite />
     </nav>
   );
 };

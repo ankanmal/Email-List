@@ -6,13 +6,16 @@ import "./emailBody.css";
 import {
   readEmailStatus,
   unreadEmailStatus,
+  favoriteEmailStatus,
 } from "./features/readunreadEmailSlice";
 import EmailMaster from "./EmailMaster";
+import SlaveEmail from "./SlaveEmail";
 
 const EmailBody = () => {
   const email = useSelector(getAllEmail);
   const readEmailstate = useSelector(readEmailStatus);
   const unreadEmailState = useSelector(unreadEmailStatus);
+  const favoriteEmailState = useSelector(favoriteEmailStatus);
   const dispatch = useDispatch();
   const emailStatus = useSelector((state) => state.emailList.status);
   console.log(readEmailstate);
@@ -42,13 +45,24 @@ const EmailBody = () => {
           return <EmailMaster e={e} />;
         }
       })
+    ) : favoriteEmailState === true ? (
+      email.map((e) => {
+        if (e.favorite === true) {
+          return <EmailMaster e={e} />;
+        }
+      })
     ) : (
       email.map((e) => {
         return <EmailMaster e={e} />;
       })
     );
-
-  return <>{display}</>;
+  console.log(display);
+  return (
+    <>
+      {display}
+      <SlaveEmail />
+    </>
+  );
 };
 
 export default EmailBody;

@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import emailListReducer from "./components/emailListSlice";
-import emailReadReducer from "./components/features/readEmailSlice";
+import emailReadUnreadReducer from "./components/features/readunreadEmailSlice";
 
 export default configureStore({
   reducer: {
     emailList: emailListReducer,
-    readEmail: emailReadReducer,
+    readEmail: emailReadUnreadReducer,
   },
 });

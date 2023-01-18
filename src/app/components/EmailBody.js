@@ -3,15 +3,20 @@ import { fetchEmail, getAllEmail } from "./emailListSlice";
 import { useState } from "react";
 import ShimmerUi from "./ShimmerUi";
 import "./emailBody.css";
-import { readEmail } from "./emailListSlice";
-import { readEmailStatus } from "./features/readEmailSlice";
+import {
+  readEmailStatus,
+  unreadEmailStatus,
+} from "./features/readunreadEmailSlice";
+import EmailMaster from "./EmailMaster";
 
 const EmailBody = () => {
   const email = useSelector(getAllEmail);
   const readEmailstate = useSelector(readEmailStatus);
+  const unreadEmailState = useSelector(unreadEmailStatus);
   const dispatch = useDispatch();
   const emailStatus = useSelector((state) => state.emailList.status);
   console.log(readEmailstate);
+  console.log(unreadEmailState);
 
   console.log("first render");
 
@@ -22,52 +27,24 @@ const EmailBody = () => {
   }, []);
   //console.log(email);
 
-  const readEmailId = (data) => {
-    dispatch(readEmail(data));
-  };
-
   const display =
     email?.length === 0 ? (
       <ShimmerUi />
     ) : readEmailstate === true ? (
       email.map((e) => {
         if (e.read === true) {
-          return (
-            <section key={e?.id}>
-              <table className="table">
-                <tbody
-                  className="tbody"
-                  onClick={() => readEmailId(e?.id)}
-                  key={e?.id}
-                >
-                  <td key={e?.from?.email}>From:{e?.from?.email}</td>
-                  <td key={e?.subject}>Subject:{e?.subject}</td>
-                  <td key={e?.short_description}>
-                    Text:{e?.short_description}
-                  </td>
-                </tbody>
-              </table>
-            </section>
-          );
+          return <EmailMaster e={e} />;
+        }
+      })
+    ) : unreadEmailState === true ? (
+      email.map((e) => {
+        if (e.read !== true) {
+          return <EmailMaster e={e} />;
         }
       })
     ) : (
       email.map((e) => {
-        return (
-          <section key={e?.id}>
-            <table className="table">
-              <tbody
-                className="tbody"
-                onClick={() => readEmailId(e?.id)}
-                key={e?.id}
-              >
-                <td key={e?.from?.email}>From:{e?.from?.email}</td>
-                <td key={e?.subject}>Subject:{e?.subject}</td>
-                <td key={e?.short_description}>Text:{e?.short_description}</td>
-              </tbody>
-            </table>
-          </section>
-        );
+        return <EmailMaster e={e} />;
       })
     );
 

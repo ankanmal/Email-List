@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const EMAIL_URL = "https://flipkart-email-mock.vercel.app/";
+const EMAIL_BODY = "https://flipkart-email-mock.vercel.app/?id=";
 
 const initialState = {
   emailList: [],
+  emailBody: [],
   status: "idle",
+  bodystatus: "idle",
   error: null,
 };
 
@@ -16,6 +19,11 @@ export const fetchEmail = createAsyncThunk("emailList/fetchEmail", async () => {
   } catch (err) {
     console.log("Failed to get Data " + err);
   }
+});
+export const fetchBody = createAsyncThunk("emailBody/fetchBody", async () => {
+  const data = await fetch(EMAIL_BODY + 3);
+  const jsonBody = await data.json();
+  return jsonBody;
 });
 
 export const emailListSlice = createSlice({
@@ -51,6 +59,16 @@ export const emailListSlice = createSlice({
       })
       .addCase(fetchEmail.rejected, (state, action) => {
         state.status = "failed";
+      })
+      .addCase(fetchBody.pending, (state, action) => {
+        state.bodystatus = "loading";
+      })
+      .addCase(fetchBody.fulfilled, (state, action) => {
+        state.bodystatus = "succeeded";
+        state.emailBody = state.emailBody.concat(action.payload);
+      })
+      .addCase(fetchBody.rejected, (state, action) => {
+        state.bodystatus = "failed";
       });
   },
 });
@@ -59,3 +77,4 @@ export default emailListSlice.reducer;
 export const { readEmail } = emailListSlice.actions;
 
 export const getAllEmail = (state) => state.emailList.emailList;
+export const getAllBody = (state) => state.emailList.emailBody;

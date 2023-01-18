@@ -1,4 +1,4 @@
-import { readEmail } from "./emailListSlice";
+import { readEmail, localStorage } from "./emailListSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 import { fetchBody } from "./emailListSlice";
@@ -10,6 +10,7 @@ const EmailMaster = ({ e }) => {
   const readEmailId = (data) => {
     dispatch(readEmail(data));
     dispatch(fetchBody(data));
+    dispatch(localStorage(data));
   };
   const formatDate = (dateUnix) => {
     const timestamp = dateUnix;

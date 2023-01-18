@@ -6,6 +6,7 @@ const EMAIL_BODY = "https://flipkart-email-mock.vercel.app/?id=";
 const initialState = {
   emailList: [],
   emailBody: null,
+  emailLocalStorage: [],
   page: 1,
   status: "idle",
   bodystatus: "idle",
@@ -42,6 +43,21 @@ export const emailListSlice = createSlice({
       if (existingEmail) {
         existingEmail.read = true;
         state.bodyId = action.payload;
+      }
+      // setTimeout(
+      //   state.emailLocalStorage.push(state.emailList[action.payload]),
+      //   500
+      // );
+
+      //state.emailLocalStorage[action.payload].read = true;
+    },
+    localStorage(state, action) {
+      console.log(state.emailLocalStorage[action.payload]);
+      const localData = state.emailLocalStorage.find(
+        (email) => email.id === action.payload
+      );
+      if (localData) {
+        localData.read = true;
       }
     },
 
@@ -91,8 +107,10 @@ export const emailListSlice = createSlice({
 });
 
 export default emailListSlice.reducer;
-export const { readEmail, favoriteEmail, changePage } = emailListSlice.actions;
+export const { readEmail, favoriteEmail, changePage, localStorage } =
+  emailListSlice.actions;
 
 export const getAllEmail = (state) => state.emailList.emailList;
 export const getAllBody = (state) => state.emailList.emailBody;
 export const currentBodyId = (state) => state.emailList.bodyId;
+export const allReadFavList = (state) => state.emailList.emailLocalStorage;

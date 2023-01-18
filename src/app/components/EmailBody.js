@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { getAllEmail } from "./emailListSlice";
+import { allReadFavList } from "./emailListSlice";
 
 import ShimmerUi from "./ShimmerUi";
 import "./emailBody.css";
@@ -13,28 +14,31 @@ import SlaveEmail from "./SlaveEmail";
 
 const EmailBody = () => {
   const email = useSelector(getAllEmail);
+  const readFaveMail = useSelector(allReadFavList);
   const readEmailstate = useSelector(readEmailStatus);
   const unreadEmailState = useSelector(unreadEmailStatus);
   const favoriteEmailState = useSelector(favoriteEmailStatus);
+  console.log(readFaveMail);
 
   const display =
     email?.length === 0 ? (
       <ShimmerUi />
     ) : readEmailstate === true ? (
-      email.map((e) => {
-        if (e.read === true) {
+      readFaveMail.map((e) => {
+        if (e?.read === true) {
+          console.log("render");
           return <EmailMaster e={e} />;
         }
       })
     ) : unreadEmailState === true ? (
       email.map((e) => {
-        if (e.read !== true) {
+        if (e?.read !== true) {
           return <EmailMaster e={e} />;
         }
       })
     ) : favoriteEmailState === true ? (
-      email.map((e) => {
-        if (e.favorite === true) {
+      readFaveMail.map((e) => {
+        if (e?.favorite === true) {
           return <EmailMaster e={e} />;
         }
       })

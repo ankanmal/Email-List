@@ -1,8 +1,64 @@
 .tbody {
   display: flex;
-  flex-direction: column;
   border: 2px solid red;
+  border-radius: 5px;
 }
 .table {
   width: 100%;
+}
+
+.mainBody {
+  display: flex;
+}
+
+.masterEmail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.slaveEmail {
+  width: 80%;
+  padding: 0px 40px;
+}
+.changeMasterEmail {
+  width: 30%;
+}
+.initialSymbol {
+  border-radius: 50%;
+  border-color: black;
+  color: whitesmoke;
+  background-color: #e54065;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.emailmasterBody {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0px;
+}
+.bodySymbol {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+}
+.from span {
+  font-weight: bold;
+}
+
+.subjectemail span {
+  font-weight: bold;
+}
+.dateAndFav {
+  margin-top: 0.5rem;
+}
+.dateAndFav span {
+  margin-right: 1rem;
+}
+.text {
+  margin-top: 0.5rem;
 }

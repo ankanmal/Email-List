@@ -1,48 +1,58 @@
 import { readEmail, localStorage } from "./emailListSlice";
 import { useSelector, useDispatch } from "react-redux";
+import "./emailBody.css";
+import { formatDate } from "../config";
 
-import { fetchBody } from "./emailListSlice";
+import { fetchBody, updateBodyId } from "./emailListSlice";
+import { useEffect } from "react";
 
 const EmailMaster = ({ e }) => {
   const dispatch = useDispatch();
   const dateUnix = e?.date;
+  const currentBodyId = useSelector((state) => state.emailList.bodyId);
+  const formatteddate = formatDate(dateUnix);
 
   const readEmailId = (data) => {
-    dispatch(readEmail(data));
-    dispatch(fetchBody(data));
-    dispatch(localStorage(data));
-  };
-  const formatDate = (dateUnix) => {
-    const timestamp = dateUnix;
-    const date = new Date(timestamp);
-    const formattedDate = date
-      .toLocaleString("default", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })
-      .replace(",", "")
-      .replace(/\//g, "/");
-    return formattedDate;
+    if (currentBodyId !== data) {
+      dispatch(readEmail(data));
+      dispatch(fetchBody(data));
+      dispatch(updateBodyId(data));
+    } else {
+      dispatch(updateBodyId(null));
+    }
   };
 
   return (
     <>
-      <section key={e?.id}>
+      <section key={e?.id} className="section">
         <table className="table">
           <tbody
             className="tbody"
             onClick={() => readEmailId(e?.id)}
             key={e?.id}
           >
-            <td key={e?.from?.email}>From:{e?.from?.email}</td>
-            <td key={e?.subject}>Subject:{e?.subject}</td>
-            <td key={e?.short_description}>Text:{e?.short_description}</td>
-            <td key={dateUnix}>{formatDate(dateUnix)}</td>
-            <td key={e?.id}>Favorite:{e?.favorite === true ? "Yes" : "No"} </td>
+            <div>
+              <h2 className="initialSymbol bodySymbol">
+                {e?.from.email[0].toUpperCase()}
+              </h2>
+            </div>
+            <div className="emailmasterBody">
+              <td key={e?.from?.email} className="from">
+                From:<span>{e?.from?.email}</span>
+              </td>
+              <td key={e?.subject} className="subjectemail">
+                Subject:<span>{e?.subject}</span>
+              </td>
+              <td key={e?.short_description} className="text">
+                {e?.short_description}
+              </td>
+              <td key={dateUnix} className="dateAndFav">
+                <span>{formatteddate}</span>
+                <span style={{ color: "#e54065" }}>
+                  {e?.favorite === true ? "Favorite" : ""}
+                </span>
+              </td>
+            </div>
           </tbody>
         </table>
       </section>

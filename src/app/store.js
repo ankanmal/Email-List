@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["emailLocalStorage"],
 };
 const persistedReducer = persistReducer(persistConfig, emailListReducer);
 

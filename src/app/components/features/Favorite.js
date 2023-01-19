@@ -10,7 +10,7 @@ const Favorite = () => {
 
   return (
     <button className="options" onClick={updateDom}>
-      Favorite
+      Favorites
     </button>
   );
 };

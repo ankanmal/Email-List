@@ -5,6 +5,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changePage, fetchEmail } from "./app/components/emailListSlice";
+import "./index.css";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ export const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <EmailBody />,
+      },
+      {
+        path: "/page=2",
         element: <EmailBody />,
       },
     ],

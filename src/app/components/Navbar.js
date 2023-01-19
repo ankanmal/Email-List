@@ -5,7 +5,7 @@ import Favorite from "./features/Favorite";
 const Navbar = () => {
   return (
     <nav className="nav">
-      <h4 className="options">Filters:</h4>
+      <h4 className="options">Filter By:</h4>
       <Unread />
       <Read />
       <Favorite />

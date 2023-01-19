@@ -42,23 +42,18 @@ export const emailListSlice = createSlice({
       );
       if (existingEmail) {
         existingEmail.read = true;
-        state.bodyId = action.payload;
+        //state.bodyId = action.payload;
+        if (
+          !state.emailLocalStorage.find(
+            (localEmail) => localEmail.id === existingEmail.id
+          )
+        ) {
+          state.emailLocalStorage.push(existingEmail);
+        }
       }
-      // setTimeout(
-      //   state.emailLocalStorage.push(state.emailList[action.payload]),
-      //   500
-      // );
-
-      //state.emailLocalStorage[action.payload].read = true;
     },
-    localStorage(state, action) {
-      console.log(state.emailLocalStorage[action.payload]);
-      const localData = state.emailLocalStorage.find(
-        (email) => email.id === action.payload
-      );
-      if (localData) {
-        localData.read = true;
-      }
+    updateBodyId(state, action) {
+      state.bodyId = action.payload;
     },
 
     favoriteEmail(state, action) {
@@ -66,7 +61,31 @@ export const emailListSlice = createSlice({
         (email) => email.id === action.payload
       );
       if (existingEmail) {
-        existingEmail.favorite = true;
+        if (existingEmail.read === true) {
+          existingEmail.favorite = true;
+          const localEmail = state.emailLocalStorage.find(
+            (email) => email.id === action.payload
+          );
+          if (localEmail) {
+            localEmail.favorite = true;
+          }
+        }
+      }
+    },
+    removeFavoriteEmail(state, action) {
+      const existingEmail = state.emailList.find(
+        (email) => email.id === action.payload
+      );
+      if (existingEmail) {
+        if (existingEmail.read === true) {
+          existingEmail.favorite = false;
+          const localEmail = state.emailLocalStorage.find(
+            (email) => email.id === action.payload
+          );
+          if (localEmail) {
+            localEmail.favorite = false;
+          }
+        }
       }
     },
     changePage(state, action) {
@@ -82,13 +101,21 @@ export const emailListSlice = createSlice({
       .addCase(fetchEmail.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.emailList = [];
-        const feat = action.payload.list.map((email) => {
+        const fetchedEmails = action.payload.list.map((email) => {
           email.read = false;
           email.favorite = false;
+          if (state.emailLocalStorage.length !== 0) {
+            const localEmail = state.emailLocalStorage.find(
+              (localEmail) => localEmail.id === email.id
+            );
+            if (localEmail) {
+              email.read = localEmail.read;
+              email.favorite = localEmail.favorite;
+            }
+          }
           return email;
         });
-
-        state.emailList = state.emailList.concat(feat);
+        state.emailList = state.emailList.concat(fetchedEmails);
       })
       .addCase(fetchEmail.rejected, (state, action) => {
         state.status = "failed";
@@ -107,8 +134,13 @@ export const emailListSlice = createSlice({
 });
 
 export default emailListSlice.reducer;
-export const { readEmail, favoriteEmail, changePage, localStorage } =
-  emailListSlice.actions;
+export const {
+  readEmail,
+  favoriteEmail,
+  changePage,
+  removeFavoriteEmail,
+  updateBodyId,
+} = emailListSlice.actions;
 
 export const getAllEmail = (state) => state.emailList.emailList;
 export const getAllBody = (state) => state.emailList.emailBody;

@@ -1,0 +1,34 @@
+.bodyHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.subject {
+  display: flex;
+  flex-grow: 3;
+  align-self: center;
+  margin-left: 20px;
+}
+.favBtn {
+  display: flex;
+  align-self: center;
+  color: whitesmoke;
+  background-color: #e54065;
+  border-radius: 20px;
+  border-style: none;
+  width: 120px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+}
+.rmv {
+  width: 160px;
+}
+.bodyStyle {
+  margin-left: 4.4rem;
+}
+.slaveEmail {
+  border: 1px solid red;
+  margin-left: 0.5rem;
+  border-radius: 5px;
+  height: fit-content;
+}

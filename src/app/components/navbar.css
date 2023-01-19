@@ -3,4 +3,10 @@
 }
 .options {
   margin: 50px 10px 20px 10px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.options:active {
+  background-color: #e1e4ea;
 }

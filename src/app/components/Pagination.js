@@ -5,8 +5,21 @@ import { Link } from "react-router-dom";
 import "./pageBtn.css";
 import { useState } from "react";
 import { updateBodyId } from "./emailListSlice";
+import {
+  toggleFavoriteList,
+  toggleReadList,
+  toggleUnreadList,
+} from "./features/readunreadEmailSlice";
+import {
+  readEmailStatus,
+  favoriteEmailStatus,
+  unreadEmailStatus,
+} from "./features/readunreadEmailSlice";
 
 const Pagination = () => {
+  const read = useSelector(readEmailStatus);
+  const fav = useSelector(favoriteEmailStatus);
+  const unread = useSelector(unreadEmailStatus);
   const [ccPage, setccPage] = useState(1);
   const dispatch = useDispatch();
   const changecurrentPage = (pageid) => {
@@ -14,6 +27,15 @@ const Pagination = () => {
     dispatch(fetchEmail(pageid));
     dispatch(updateBodyId(null));
     setccPage(pageid);
+    if (fav === true) {
+      dispatch(toggleFavoriteList(false));
+    }
+    if (read === true) {
+      dispatch(toggleReadList(false));
+    }
+    if (unread == true) {
+      dispatch(toggleUnreadList(false));
+    }
   };
 
   return (

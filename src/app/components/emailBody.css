@@ -1,7 +1,10 @@
 .tbody {
   display: flex;
-  border: 2px solid red;
+  border: 2px solid #cfd2dc;
   border-radius: 5px;
+}
+.activeTbody {
+  border: 2px solid #e54065;
 }
 .table {
   width: 100%;
@@ -17,7 +20,7 @@
   width: 100%;
 }
 .slaveEmail {
-  width: 80%;
+  width: 70%;
   padding: 0px 40px;
 }
 .changeMasterEmail {

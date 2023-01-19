@@ -1,0 +1,50 @@
+.shimbody {
+  display: flex;
+  width: 100%;
+  border: 2px solid #cfd2dc;
+  border-radius: 5px;
+  height: 120px;
+}
+.shimmaster {
+  display: flex;
+  margin-left: 10px;
+  height: 110px;
+}
+.shimtbody {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.shimtext2 {
+  width: 150px;
+  height: 15px;
+  background-color: #e3e4e5;
+  margin-bottom: 5px;
+}
+.shimtext1 {
+  width: 250px;
+  height: 15px;
+  background-color: #e3e4e5;
+  margin-bottom: 5px;
+}
+
+.shimtextcont {
+  width: 650px;
+  height: 15px;
+  background-color: #e3e4e5;
+  margin-top: 10px;
+}
+
+.shimdate {
+  width: 150px;
+  height: 15px;
+  background-color: #e3e4e5;
+  margin-top: 10px;
+}
+.initshim {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 40px;
+  height: 40px;
+}

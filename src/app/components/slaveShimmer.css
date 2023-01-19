@@ -1,0 +1,62 @@
+.bodyHe {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+.init {
+  border-radius: 50%;
+
+  background-color: #e3e4e5;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sub {
+  width: 130px;
+  height: 30px;
+  background-color: #e3e4e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 30px;
+  padding-left: 30px;
+}
+.but {
+  display: flex;
+  align-self: center;
+  background-color: #e3e4e5;
+  border-radius: 20px;
+  border-style: none;
+  width: 120px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 570px;
+}
+
+.shimslaveEmail {
+  width: 70%;
+  height: 550px;
+
+  border: 2px solid #cfd2dc;
+  border-radius: 5px;
+  margin-left: 0.5rem;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.p {
+  width: 850px;
+  height: 100px;
+  margin-bottom: 20px;
+  background-color: #e3e4e5;
+  margin-left: 4.4rem;
+}
+.shimtime {
+  background-color: #e3e4e5;
+  width: 130px;
+  height: 20px;
+  margin-left: 4.4rem;
+}

@@ -1,10 +1,8 @@
-import { readEmail, localStorage } from "./emailListSlice";
+import { readEmail } from "./emailListSlice";
 import { useSelector, useDispatch } from "react-redux";
 import "./emailBody.css";
 import { formatDate } from "../config";
-
 import { fetchBody, updateBodyId } from "./emailListSlice";
-import { useEffect } from "react";
 
 const EmailMaster = ({ e }) => {
   const dispatch = useDispatch();
@@ -27,9 +25,10 @@ const EmailMaster = ({ e }) => {
       <section key={e?.id} className="section">
         <table className="table">
           <tbody
-            className="tbody"
+            className={currentBodyId === e?.id ? "tbody activeTbody" : "tbody"}
             onClick={() => readEmailId(e?.id)}
             key={e?.id}
+            style={e?.read === true ? { backgroundColor: "#f2f2f2" } : {}}
           >
             <div>
               <h2 className="initialSymbol bodySymbol">

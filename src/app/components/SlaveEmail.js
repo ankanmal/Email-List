@@ -5,6 +5,7 @@ import "./emailBody.css";
 import "./slaveEmail.css";
 import ShimmerUi from "./ShimmerUi";
 import { formatDate } from "../config";
+import SlaveShimmerUI from "./SlaveShimmerUI";
 
 const SlaveEmail = () => {
   const dispatch = useDispatch();
@@ -30,9 +31,9 @@ const SlaveEmail = () => {
   return (
     <>
       {body === null ? (
-        <ShimmerUi />
+        <SlaveShimmerUI />
       ) : isLoading === "loading" ? (
-        <ShimmerUi />
+        <SlaveShimmerUI />
       ) : (
         <section className="slaveEmail">
           <header className="bodyHeader">

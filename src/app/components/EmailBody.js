@@ -19,7 +19,6 @@ const EmailBody = () => {
   const unreadEmailState = useSelector(unreadEmailStatus);
   const favoriteEmailState = useSelector(favoriteEmailStatus);
   const bodyId = useSelector(currentBodyId);
-  console.log(readFaveMail);
 
   const display =
     email?.length === 0 ? (
